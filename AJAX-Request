@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jQuery AJAX Examples</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>jQuery AJAX Requests</h1>
+  <button id="loadData">Load Data</button>
+  <div id="data"></div>
+
+  <script>
+    $(document).ready(function() {
+  $("#loadData").click(function() {
+    $.ajax({
+      url: "https://jsonplaceholder.typicode.com/posts",
+      type: "GET",
+      success: function(data) {
+        let output = ""; // String to store HTML content
+        for (let i = 0; i < data.length; i++) {
+          const post = data[i]; // Access each post object
+          output += `
+            <div class="post">
+              <h3>Title: ${post.title}</h3>
+              <p>Body: ${post.body}</p>
+              <p>Id: ${post.id}</p>
+            </div>
+          `;
+        }
+        $('#data').html(output); // Display all posts in a container
+      },
+      error: function(request, status, error) {
+        $('#data').html('Error fetching data');
+        console.error('Error: ' + status + ' ' + error);
+      }
+    });
+  });
+});
+
+  </script>
+</body>
+</html>
